@@ -35,7 +35,7 @@ param dns2 string = ''
 
 // Session host preparation script
 @description('URL of the SessionHostPrep.ps1 script')
-param sessionHostPrepScriptUrl string = 'https://raw.githubusercontent.com/andrew-kemp/CloudPAW/refs/heads/main/HostPrep.ps1'
+param sessionHostPrepScriptUrl string = 'https://raw.githubusercontent.com/andrew-kemp/AzureVirtualDesktop/refs/heads/main/02a-SessionHostPrep.ps1'
 
 var fsProfilesPath = '\\\\${storageAccountName}.file.${environment().suffixes.storage}\\profiles'
 var fsRedirectionPath = '\\\\${storageAccountName}.file.${environment().suffixes.storage}\\redirections'
