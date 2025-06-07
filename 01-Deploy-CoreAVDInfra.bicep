@@ -54,9 +54,15 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   }
 }
 
+// Disable Azure Files soft delete (backup) by default
 resource fileService 'Microsoft.Storage/storageAccounts/fileServices@2023-01-01' = {
   name: 'default'
   parent: storageAccount
+  properties: {
+    shareDeleteRetentionPolicy: {
+      enabled: false
+    }
+  }
 }
 
 resource fileShareProfiles 'Microsoft.Storage/storageAccounts/fileServices/shares@2023-01-01' = {

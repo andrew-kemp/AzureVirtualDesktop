@@ -33,6 +33,10 @@ for ($i = 0; $i -lt $subscriptions.Count; $i++) {
     Write-Host "$i. $($subscriptions[$i].Name) - $($subscriptions[$i].Id)"
 }
 $subscriptionNumber = Read-Host -Prompt "Enter the number of the subscription from the list above"
+if (-not ($subscriptionNumber -as [int]) -or $subscriptionNumber -ge $subscriptions.Count) {
+    Write-Host "Invalid subscription selection. Exiting."
+    exit 1
+}
 $selectedSubscription = $subscriptions[$subscriptionNumber]
 $subscriptionId = $selectedSubscription.Id
 
@@ -59,6 +63,19 @@ if ($useExistingGroups -in @('Y','y')) {
 
 $storageAppDisplayName = Read-Host -Prompt "Enter the display name of the Storage App (Enterprise Application)"
 
+# Prompt for storage account name/prefix and build FQDN
+$storageAccountInput = Read-Host -Prompt "Enter the storage account name or FQDN (e.g. kempyfsl or kempyfsl.file.core.windows.net)"
+if ($storageAccountInput -match "^([^.]+)\.file\.core\.windows\.net$") {
+    $storageAccountPrefix = $matches[1]
+    $storageAccountFqdn = $storageAccountInput
+} elseif ($storageAccountInput -notmatch "\.") {
+    $storageAccountPrefix = $storageAccountInput
+    $storageAccountFqdn = "$storageAccountPrefix.file.core.windows.net"
+} else {
+    Write-Host "Input not recognized. Please enter either the prefix (e.g. kempyfsl) or full FQDN (e.g. kempyfsl.file.core.windows.net)." -ForegroundColor Red
+    exit 1
+}
+
 Write-Host "`nSummary of your choices:"
 Write-Host "Resource group: $resourceGroupName"
 Write-Host "Prefix: $prefix"
@@ -74,6 +91,7 @@ if ($useExistingGroups -in @('Y','y')) {
     Write-Host "Device Group: $deviceGroupName ($deviceMailNickname)"
 }
 Write-Host "Storage App Display Name: $storageAppDisplayName"
+Write-Host "Storage Account FQDN: $storageAccountFqdn"
 $proceed = Read-Host "Proceed with these settings? (Y/N)"
 if ($proceed -notin @('Y', 'y')) {
     Write-Host "Exiting."
@@ -164,7 +182,12 @@ if ($sessionDesktop) {
 Write-Host "`n=== Storage App: Grant Graph Consent & Exclude from Conditional Access Policies ==="
 $storageApp = Get-MgServicePrincipal -Filter "displayName eq '$storageAppDisplayName'"
 if (-not $storageApp) {
-    Write-Host "Service Principal '$storageAppDisplayName' not found." -ForegroundColor Red
+    Write-Host "Service Principal '$storageAppDisplayName' not found. Searching for similar names..." -ForegroundColor Yellow
+    $similarApps = Get-MgServicePrincipal -Filter "startswith(displayName,'$storageAppDisplayName')" -All
+    if ($similarApps) {
+        Write-Host "Did you mean one of these?"
+        $similarApps | Select-Object DisplayName,Id
+    }
     Write-Host "You can verify the display name in Entra ID > Enterprise Applications."
     exit 1
 }

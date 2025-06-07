@@ -79,7 +79,7 @@ resource nic 'Microsoft.Network/networkInterfaces@2020-11-01' = [for i in range(
   })
 }]
 
-// Create the VMs
+// Create the VMs (removing dataDisks so only the OS disk is created)
 resource VM 'Microsoft.Compute/virtualMachines@2020-12-01' = [for i in range(0, numberOfHosts): {
   name: '${sessionHostPrefix}-${i}'
   location: resourceGroup().location
@@ -106,13 +106,7 @@ resource VM 'Microsoft.Compute/virtualMachines@2020-12-01' = [for i in range(0, 
         createOption: 'FromImage'
         diskSizeGB: 256
       }
-      dataDisks: [
-        {
-          lun: 0
-          createOption: 'Empty'
-          diskSizeGB: 256
-        }
-      ]
+      // No dataDisks property
     }
     networkProfile: {
       networkInterfaces: [

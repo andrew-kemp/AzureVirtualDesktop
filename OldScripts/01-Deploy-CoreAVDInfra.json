@@ -1,0 +1,261 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.33.93.31351",
+      "templateHash": "10996867925773083838"
+    }
+  },
+  "parameters": {
+    "storageAccountName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the storage account."
+      }
+    },
+    "kerberosDomainName": {
+      "type": "string",
+      "metadata": {
+        "description": "The Active Directory domain name for Azure AD Kerberos authentication (e.g., corp.contoso.com)."
+      }
+    },
+    "kerberosDomainGuid": {
+      "type": "string",
+      "metadata": {
+        "description": "The GUID of the Active Directory domain (e.g., 12345678-90ab-cdef-1234-567890abcdef)."
+      }
+    },
+    "smbShareContributorGroupOid": {
+      "type": "string",
+      "metadata": {
+        "description": "The Object ID of the group to assign Storage File Data SMB Share Contributor."
+      }
+    },
+    "smbShareElevatedContributorGroupOid": {
+      "type": "string",
+      "metadata": {
+        "description": "The Object ID of the group to assign Storage File Data SMB Share Elevated Contributor."
+      }
+    },
+    "vnetResourceGroup": {
+      "type": "string",
+      "defaultValue": "Core-Services",
+      "metadata": {
+        "description": "Resource group of the vNet for the Private Endpoint"
+      }
+    },
+    "vnetName": {
+      "type": "string",
+      "defaultValue": "Master-vNet",
+      "metadata": {
+        "description": "Name of the vNet for the Private Endpoint"
+      }
+    },
+    "subnetName": {
+      "type": "string",
+      "defaultValue": "Storage",
+      "metadata": {
+        "description": "Subnet name for the Private Endpoint"
+      }
+    },
+    "DefaultPrefix": {
+      "type": "string",
+      "defaultValue": "Kemponline",
+      "metadata": {
+        "description": "Prefix for the AVD resources"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2023-01-01",
+      "name": "[parameters('storageAccountName')]",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "Standard_LRS"
+      },
+      "kind": "StorageV2",
+      "properties": {
+        "allowBlobPublicAccess": false,
+        "publicNetworkAccess": "Disabled",
+        "minimumTlsVersion": "TLS1_2",
+        "azureFilesIdentityBasedAuthentication": {
+          "directoryServiceOptions": "AADKERB",
+          "activeDirectoryProperties": {
+            "domainName": "[parameters('kerberosDomainName')]",
+            "domainGuid": "[parameters('kerberosDomainGuid')]"
+          },
+          "sharePermissions": "Share"
+        },
+        "networkAcls": {
+          "defaultAction": "Deny",
+          "bypass": "AzureServices"
+        },
+        "supportsHttpsTrafficOnly": true
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/fileServices",
+      "apiVersion": "2023-01-01",
+      "name": "[format('{0}/{1}', parameters('storageAccountName'), 'default')]",
+      "properties": {
+        "shareDeleteRetentionPolicy": {
+          "enabled": false
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/fileServices/shares",
+      "apiVersion": "2023-01-01",
+      "name": "[format('{0}/{1}/{2}', parameters('storageAccountName'), 'default', 'profiles')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts/fileServices', parameters('storageAccountName'), 'default')]"
+      ]
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/fileServices/shares",
+      "apiVersion": "2023-01-01",
+      "name": "[format('{0}/{1}/{2}', parameters('storageAccountName'), 'default', 'redirections')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts/fileServices', parameters('storageAccountName'), 'default')]"
+      ]
+    },
+    {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2022-04-01",
+      "scope": "[format('Microsoft.Storage/storageAccounts/{0}', parameters('storageAccountName'))]",
+      "name": "[guid(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), parameters('smbShareContributorGroupOid'), 'FileShareContributor')]",
+      "properties": {
+        "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '0c867c2a-1d8c-454a-a3db-ab2ea1bdc8bb')]",
+        "principalId": "[parameters('smbShareContributorGroupOid')]",
+        "principalType": "Group"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2022-04-01",
+      "scope": "[format('Microsoft.Storage/storageAccounts/{0}', parameters('storageAccountName'))]",
+      "name": "[guid(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), parameters('smbShareElevatedContributorGroupOid'), 'FileShareElevatedContributor')]",
+      "properties": {
+        "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'a7264617-510b-434b-a828-9731dc254ea7')]",
+        "principalId": "[parameters('smbShareElevatedContributorGroupOid')]",
+        "principalType": "Group"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Network/privateEndpoints",
+      "apiVersion": "2023-05-01",
+      "name": "[format('{0}-file-pe', parameters('storageAccountName'))]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "subnet": {
+          "id": "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('vnetResourceGroup')), 'Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetName'))]"
+        },
+        "privateLinkServiceConnections": [
+          {
+            "name": "storageAccountFileConnection",
+            "properties": {
+              "privateLinkServiceId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]",
+              "groupIds": [
+                "file"
+              ]
+            }
+          }
+        ]
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.DesktopVirtualization/hostPools",
+      "apiVersion": "2021-07-12",
+      "name": "[format('{0}-HostPool', parameters('DefaultPrefix'))]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "friendlyName": "[format('{0} Host Pool', parameters('DefaultPrefix'))]",
+        "description": "[format('{0} AVD Host Pool for users to securely access resources from', parameters('DefaultPrefix'))]",
+        "hostPoolType": "Pooled",
+        "loadBalancerType": "BreadthFirst",
+        "maxSessionLimit": 5,
+        "personalDesktopAssignmentType": "Automatic",
+        "startVMOnConnect": true,
+        "preferredAppGroupType": "Desktop",
+        "customRdpProperty": "enablecredsspsupport:i:1;authentication level:i:2;enablerdsaadauth:i:1;redirectwebauthn:i:1;"
+      }
+    },
+    {
+      "type": "Microsoft.DesktopVirtualization/applicationGroups",
+      "apiVersion": "2021-07-12",
+      "name": "[format('{0}-AppGroup', parameters('DefaultPrefix'))]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "description": "[format('{0} Application Group', parameters('DefaultPrefix'))]",
+        "friendlyName": "[format('{0} Desktop Application Group', parameters('DefaultPrefix'))]",
+        "hostPoolArmPath": "[resourceId('Microsoft.DesktopVirtualization/hostPools', format('{0}-HostPool', parameters('DefaultPrefix')))]",
+        "applicationGroupType": "Desktop"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.DesktopVirtualization/hostPools', format('{0}-HostPool', parameters('DefaultPrefix')))]"
+      ]
+    },
+    {
+      "type": "Microsoft.DesktopVirtualization/workspaces",
+      "apiVersion": "2021-07-12",
+      "name": "[format('{0}-Workspace', parameters('DefaultPrefix'))]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "description": "[format('{0} Workspace', parameters('DefaultPrefix'))]",
+        "friendlyName": "[format('{0} Workspace', parameters('DefaultPrefix'))]",
+        "applicationGroupReferences": [
+          "[resourceId('Microsoft.DesktopVirtualization/applicationGroups', format('{0}-AppGroup', parameters('DefaultPrefix')))]"
+        ]
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.DesktopVirtualization/applicationGroups', format('{0}-AppGroup', parameters('DefaultPrefix')))]"
+      ]
+    }
+  ],
+  "outputs": {
+    "storageAccountId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+    },
+    "profilesShareName": {
+      "type": "string",
+      "value": "profiles"
+    },
+    "redirectionShareName": {
+      "type": "string",
+      "value": "redirections"
+    },
+    "privateEndpointId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Network/privateEndpoints', format('{0}-file-pe', parameters('storageAccountName')))]"
+    },
+    "hostPoolId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.DesktopVirtualization/hostPools', format('{0}-HostPool', parameters('DefaultPrefix')))]"
+    },
+    "appGroupId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.DesktopVirtualization/applicationGroups', format('{0}-AppGroup', parameters('DefaultPrefix')))]"
+    },
+    "workspaceId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.DesktopVirtualization/workspaces', format('{0}-Workspace', parameters('DefaultPrefix')))]"
+    }
+  }
+}
