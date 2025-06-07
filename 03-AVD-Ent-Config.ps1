@@ -257,3 +257,12 @@ foreach ($policy in $filteredPolicies) {
         Write-Host "`nPolicy '$($policy.DisplayName)' already excludes AppId $CAExclude."
     }
 }
+Write-Host ""
+Write-Host "---------------------------------------------------------------"
+Write-Host "IMPORTANT: Grant Admin Consent in Azure Portal"
+Write-Host "Go to: Azure Portal > App registrations > $($selectedApp.DisplayName) > API permissions > Grant admin consent"
+Write-Host "This is required for openid, profile, and User.Read delegated permissions to be effective."
+Write-Host "---------------------------------------------------------------"
+Write-Host ""
+Write-Host "--- Complete ---"
+Write-Host "Please verify the CA exclusions and permissions in the Entra Portal."
