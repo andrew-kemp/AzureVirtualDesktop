@@ -43,6 +43,11 @@ This repository provides an end-to-end, modular automation suite for deploying A
      `03-AVD-Ent-Config.ps1`  
      _Run interactively in Azure Cloud Shell or PowerShell with required modules. Sets up or reuses AAD groups, applies RBAC, enables VM auto-shutdown, and assists with Conditional Access exclusions._
 
+     **⚠️ IMPORTANT: After running this script, you MUST manually grant admin consent for the Storage Account App in the Entra Portal.**
+     - The app will be listed as `[Storage Account] mystorage.file.core.windows.net` (replace with your storage account name).
+     - Go to **Azure Portal > Entra ID > App registrations > [Storage Account]... > API permissions > Grant admin consent**.
+     - **This step is mandatory – if you skip it, FSLogix shares and user profiles will not work!**
+
    - **Step 4:** Add DNS record for storage  
      `04-Add-StorageDNSRecord.ps1.ps1`  
      _Run on your DNS management server. Prompts for DNS server, zone, storage account, and private endpoint IP. Creates missing zones/records as needed._
@@ -72,7 +77,10 @@ This repository provides an end-to-end, modular automation suite for deploying A
 - **03-AVD-Ent-Config.ps1:**
   - Interactive PowerShell script for configuring AAD groups (user, admin, device), assigning permissions, and updating Conditional Access policies.
   - Ensures correct group memberships, role assignments, and auto-shutdown schedules.
-  - Assists with CA exclusion for the storage app and prompts for required admin consent.
+  - Assists with CA exclusion for the Storage App and prompts for required admin consent.
+  - **Manual Step Required:**  
+    - After the script, go to the Entra Portal and grant admin consent to the Storage Account App (named `[Storage Account] mystorage.file.core.windows.net`).  
+    - **Without this, FSLogix profile shares will NOT work.**
 
 - **04-Add-StorageDNSRecord.ps1.ps1:**
   - Adds a DNS A record for your storage account’s private endpoint in the correct DNS zone.
