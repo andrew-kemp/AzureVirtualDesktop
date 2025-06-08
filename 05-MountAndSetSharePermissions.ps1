@@ -1,4 +1,18 @@
-\\kempyfslstorage.file.core.windows.net\redirections# ================================
+<#
+    .SYNOPSIS
+    - This script maps FSLogix shares using UNC paths, sets NTFS permissions, and disconnects.
+    - It prompts for drive letter, storage account (prefix or FQDN), shares, and group names.
+    - It is designed to be robust for Azure Files and does not rely on mapped drives.
+    - It is to be rrun from a Windows 11 client that is Hybrid Joined to Entra ID.
+    - The script maps to 'profiles' and 'redirections' shares in order, sets NTFS permissions using the UNC path (not mapped drive), then disconnects.
+    - Created by: Andrew Kemp
+    - Date: 2025-06-08
+    - Version: 1.0.0
+    - Created with the assistance of Copilot for GitHub
+    - Script 5 of 5
+#>
+
+# ================================
 # FSLogix Map and Permission Script (UNC path version, robust for Azure Files)
 # ================================
 # Prompts for drive letter, storage account (prefix or FQDN), shares, and group names.

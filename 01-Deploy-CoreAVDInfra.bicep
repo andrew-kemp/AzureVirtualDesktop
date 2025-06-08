@@ -1,3 +1,30 @@
+// This Bicep template deploys core Azure Virtual Desktop (AVD) infrastructure components
+// including a storage account with Azure AD Kerberos authentication, private endpoints,
+// and AVD resources such as host pools, application groups, and workspaces.
+// It also configures role assignments for file share contributors and elevated contributors.
+// The template is designed to be reusable and parameterized for flexibility.
+// Version: 1.0.0
+// Created by:Andrew Kemp
+// Date: 2025-06-08
+// Created with the assistance of Copilot for GitHub
+//Run this script in the Azure Cloud Shell or Azure CLI with Bicep installed
+// Script 1 of 5
+
+// This will as you for the followin:
+// Create or use an existing resource group
+// Provide a name for the storage account (must be globally unique)
+// Provide the Active Directory domain name for Azure AD Kerberos authentication
+// Provide the GUID of the Active Directory domain
+// Provide the Object ID of the group to assign Storage File Data SMB Share Contributor
+// Provide the Object ID of the group to assign Storage File Data SMB Share Elevated Contributor
+// Provide the resource group of the vNet for the Private Endpoint (default is 'Core-Services')
+// Provide the name of the vNet for the Private Endpoint (default is 'Master-vNet')
+// Provide the subnet name for the Private Endpoint (default is 'Storage')
+// Provide a prefix for the AVD resources (default is 'Kemponline')
+
+
+//// Parameters:
+
 @description('The name of the storage account.')
 param storageAccountName string
 

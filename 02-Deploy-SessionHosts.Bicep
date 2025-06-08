@@ -1,3 +1,25 @@
+// This Bicep template deploys session hosts for an Azure Virtual Desktop (AVD) host pool.
+// Includes configuration for network interfaces, virtual machines, and extensions for session host preparation.
+// and host pool registration.
+// It will also set up the necessary extensions for Entra ID join, guest attestation, and session host preparation.
+// The inputs required will be prompted when deploying the template.
+// Use existing Resource  Group or create new
+// AVD Sesseion Host prefix
+// Number of session hosts to deploy
+// Admin password for session hosts
+// Admin username for session hosts
+// Host pool registration key - You will need to obtain this from the newly created host pool from the first step
+// Existing vNet and subnet details
+// Storage account name for FSLogix profiles and redirections
+// DNS server settings for session hosts
+// URL for the session host preparation script
+// Version: 1.0.0
+// Created by: Andrew Kemp
+// Date: 2025-06-08
+// Created with the assistance of Copilot for GitHub
+// Run this script in the Azure Cloud Shell or Azure CLI with Bicep installed
+// Script 2 of 5
+
 @description('Prefix for all session hosts')
 param sessionHostPrefix string = 'AVD'
 

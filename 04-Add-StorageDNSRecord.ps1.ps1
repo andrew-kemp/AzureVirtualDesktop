@@ -1,3 +1,16 @@
+<#
+    .SYNOPSIS
+    - This script adds a DNS A record for a storage account in the file.core.windows.net zone.
+    - It checks if the zone exists, creates it if not, and adds the record if it doesn't already exist.
+    - It prompts the user for necessary inputs such as DNS server, zone name, storage account prefix or FQDN, and Private Endpoint IP address.
+    - The script is designed to be run on a Windows Server or PAW with the DNS Server role installed.
+    - It requires the DNSServer PowerShell module to be available.
+    - Created by: Andrew Kemp
+    - Date: 2025-06-08
+    - Version: 1.0.0
+    - Created with the assistance of Copilot for GitHub
+    - Script 4 of 5
+#>
 Import-Module DNSServer
 
 # Prompt for DNS server (default: localhost)

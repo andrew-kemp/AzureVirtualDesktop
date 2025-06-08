@@ -1,11 +1,22 @@
 <#
-    AVD-Phase3.ps1 (Azure Cloud Shell Optimized)
-    - Run in Azure Cloud Shell (https://shell.azure.com or Portal > Cloud Shell)
-    - Az PowerShell modules are pre-installed.
-    - Microsoft.Graph modules will be installed to your user profile if not present.
-    - You are already authenticated, but the script will ensure correct context.
-    - Both PowerShell and Azure CLI commands are supported in Cloud Shell.
-    - If you need to persist files, use $HOME/clouddrive.
+    - This script is designed to configure Azure Virtual Desktop (AVD) environments.
+    - It sets up user and admin groups, assigns roles, configures auto-shutdown for session hosts,
+    - and manages Conditional Access policies for applications.
+    - It also handles the creation of necessary Azure AD groups and assigns them to the AVD application group.
+    - The script prompts for user input to customize the configuration.
+    - It requires the Az PowerShell module and Microsoft.Graph modules to be installed.
+    - The script is intended to be run in an Azure environment, such as Azure Cloud Shell or a local PowerShell session with the necessary modules installed.
+    - The script includes error handling and checks to ensure that the necessary resources exist before proceeding.
+    - It also provides a summary of the configuration choices made by the user.
+    - The script is designed to be run interactively, prompting the user for necessary information.
+    - It is recommended to run this script in an environment where you have the necessary permissions to create and manage Azure resources.
+    - The script is structured to be modular, allowing for easy updates and modifications in the future.
+    - The script is part of a larger deployment process for Azure Virtual Desktop environments.
+    - Created by: Andrew Kemp
+    - Date: 2025-06-08
+    - Version: 1.0.0
+    - Script 3 of 5
+    - Created with the assistance of Copilot for GitHub
 #>
 
 # Function to check if a module is installed (for Microsoft.Graph modules)

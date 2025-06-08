@@ -1,3 +1,14 @@
+# Description: This script prepares a Windows Server session host for FSLogix and Cloud Kerberos.
+# It sets up the necessary registry keys for FSLogix profiles and Cloud Kerberos,
+# and removes specified preinstalled Microsoft Store applications.
+# This sctipt is called by 02-Deploy-SessionHost.Bicep file and is run as part of the vm extension on the session host VM.
+# Created by: Andrew Kemp
+# Date: 2025-06-08
+# Version: 1.0.0
+# Created with the assistance of Copilot for GitHub
+# Script 2a of 5
+
+
 param (
     [string]$ProfilesPath,
     [string]$RedirectionPath
