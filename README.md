@@ -1,104 +1,117 @@
 # Azure Virtual Desktop (AVD) – Automated Enterprise Deployment
 
-This repository provides a modular, step-by-step automation suite for deploying Azure Virtual Desktop (AVD) in a secure, enterprise-ready configuration. The workflow leverages Bicep for infrastructure and PowerShell for post-deployment and hybrid tasks, including FSLogix integration, private endpoint storage, RBAC, and hybrid identity.
+This repository provides an end-to-end, modular automation suite for deploying Azure Virtual Desktop (AVD) in a secure, enterprise-ready configuration. All templates and scripts are designed for repeatability, security, and clarity, with a workflow that leverages Bicep, ARM JSON, and PowerShell for every step of the deployment.
 
 ---
 
-## 📋 Workflow Overview
+## 📁 Repository Contents
 
-| Step | Script Name                           | Purpose                                                                      | Run Location          |
-|------|---------------------------------------|------------------------------------------------------------------------------|-----------------------|
-| 1    | `01-Deploy-CoreAVDInfra.bicep`        | Deploys storage, networking, host pool, app group, and workspace for AVD.     | Azure CLI/Portal      |
-| 2    | `02-Deploy-SessionHosts.bicep`        | Deploys session host VMs and registers them to the host pool.                 | Azure CLI/Portal      |
-| 2a   | `02a-SessionHostPrep.ps1`             | Prepares session host OS (FSLogix, Kerberos, cleanup) as VM custom script.    | VM extension (auto)   |
-| 3    | `03-Configure-AVDRolesAndGroups.ps1`  | Sets up RBAC, AAD groups, application/desktop permissions, and auto-shutdown. | Azure Cloud Shell     |
-| 4    | `04-Add-StorageDNSRecord.ps1`         | Adds internal DNS A record for storage private endpoint.                      | DNS/Admin Server      |
-| 5    | `05-MountAndSetSharePermissions.ps1`  | Mounts Azure Files shares, sets NTFS permissions for FSLogix.                 | Hybrid-joined Device  |
+| Step | File Name                                | Purpose                                                                             | Run Location                  |
+|------|------------------------------------------|-------------------------------------------------------------------------------------|-------------------------------|
+| 1    | `01-Deploy-CoreAVDInfra.bicep/json`      | Deploy core AVD infra: storage, networking, host pool, app group, workspace, RBAC    | Azure CLI/Portal              |
+| 2    | `02-Deploy-SessionHosts.Bicep/json`      | Deploy and register session host VMs with all required extensions                    | Azure CLI/Portal              |
+| 2a   | `02a-SessionHostPrep.ps1`                | Prepare session host OS for FSLogix, Kerberos, and cleanup (runs as VM extension)    | VM Extension (auto)           |
+| 3    | `03-AVD-Ent-Config.ps1`                  | Configure AAD groups, RBAC, VM auto-shutdown, Conditional Access exclusions          | Azure Cloud Shell/PowerShell  |
+| 4    | `04-Add-StorageDNSRecord.ps1.ps1`        | Add internal DNS A record for storage private endpoint                               | DNS/Admin Server              |
+| 5    | `05-MountAndSetSharePermissions.ps1`     | Mount Azure Files shares, set NTFS permissions for FSLogix                           | Hybrid-joined Device          |
 
 ---
 
 ## 🚀 Quick Start
 
-1. **Clone this repository**
+1. **Clone the repository**
    ```sh
-   git clone https://github.com/YOUR-ORG/YOUR-REPO.git
-   cd YOUR-REPO
+   git clone https://github.com/andrew-kemp/AzureVirtualDesktop.git
+   cd AzureVirtualDesktop
    ```
 
-2. **Deploy in Order:**
-   - **01-Deploy-CoreAVDInfra.bicep**  
-     Deploy using Azure CLI, PowerShell, or Portal.
-   - **02-Deploy-SessionHosts.bicep**  
-     Use the registration key output from Step 1 as an input parameter.
-   - **02a-SessionHostPrep.ps1**  
-     Runs automatically as part of Step 2 (do not run manually).
-   - **03-Configure-AVDRolesAndGroups.ps1**  
-     Run interactively from [Azure Cloud Shell](https://shell.azure.com/).
-   - **04-Add-StorageDNSRecord.ps1**  
-     Run on your internal DNS server (requires DNS admin permissions).
-   - **05-MountAndSetSharePermissions.ps1**  
-     Run on a hybrid-joined Windows device with AD and share access.
+2. **Follow the deployment steps in order:**
+
+   - **Step 1:** Deploy core infrastructure  
+     `01-Deploy-CoreAVDInfra.bicep` or `01-Deploy-CoreAVDInfra.json`  
+     _Deploy using Azure CLI, PowerShell, or the portal. You will need to provide details such as storage account name, Kerberos AD settings, vNet/subnet info, and AAD group object IDs._
+
+   - **Step 2:** Deploy session hosts  
+     `02-Deploy-SessionHosts.Bicep` or `02-Deploy-SessionHosts.json`  
+     _Requires registration key output from the Host Pool in Step 1. Specify session host count, admin credentials, vNet/subnet, storage info, and optionally DNS servers._
+
+   - **Step 2a:** Session host preparation  
+     `02a-SessionHostPrep.ps1`  
+     _Runs automatically as a VM custom script extension—do not run manually. Configures FSLogix, Cloud Kerberos, and removes unwanted apps._
+
+   - **Step 3:** Configure AVD roles, groups, and policies  
+     `03-AVD-Ent-Config.ps1`  
+     _Run interactively in Azure Cloud Shell or PowerShell with required modules. Sets up or reuses AAD groups, applies RBAC, enables VM auto-shutdown, and assists with Conditional Access exclusions._
+
+   - **Step 4:** Add DNS record for storage  
+     `04-Add-StorageDNSRecord.ps1.ps1`  
+     _Run on your DNS management server. Prompts for DNS server, zone, storage account, and private endpoint IP. Creates missing zones/records as needed._
+
+   - **Step 5:** Mount shares and set permissions  
+     `05-MountAndSetSharePermissions.ps1`  
+     _Run on a hybrid-joined Windows device. Maps FSLogix profile and redirection shares, applies secure NTFS permissions for user/admin groups, then disconnects._
 
 ---
 
-## 📝 Script Descriptions
+## 📝 Script & Template Details
 
-### 1. `01-Deploy-CoreAVDInfra.bicep`
-- Deploys the storage account (with Azure AD Kerberos and private endpoint), networking, FSLogix shares, AVD host pool, app group, and workspace.
-- Sets initial RBAC for Azure Files access.
+- **01-Deploy-CoreAVDInfra (Bicep/JSON):**
+  - Deploys storage (with Azure AD Kerberos/private endpoint), networking, FSLogix shares, host pool, app group, and workspace.
+  - Sets up least-privilege RBAC for storage access using group Object IDs.
+  - Outputs resource IDs for use in following steps.
 
-### 2. `02-Deploy-SessionHosts.bicep`
-- Deploys Windows 11 AVD session hosts, joins them to vNet/subnet, configures DNS.
-- Registers hosts to the host pool (requires registration key output from Step 1).
-- Configures VM extensions to run session host preparation.
+- **02-Deploy-SessionHosts (Bicep/JSON):**
+  - Provisions Windows 11 AVD session hosts, joins vNet, configures DNS, registers hosts to the pool.
+  - Attaches extensions for Entra ID join, guest attestation, and session host prep.
+  - Outputs post-deployment manual steps for AVD app registration, CA policy, folder permissions, and DNS.
 
-### 2a. `02a-SessionHostPrep.ps1`
-- Referenced as a VM custom script extension in Step 2 (runs automatically).
-- Configures FSLogix registry settings, enables Cloud Kerberos, removes unnecessary UWP apps.
+- **02a-SessionHostPrep.ps1:**
+  - Configures FSLogix registry, enables Cloud Kerberos, and removes preinstalled UWP/Store apps.
+  - Runs automatically on each session host as a VM extension.
 
-### 3. `03-Configure-AVDRolesAndGroups.ps1`
-- Run interactively in Azure Cloud Shell.
-- Prompts for resource group, group names, and storage app.
-- Creates or reuses AAD groups for users/admins/devices.
-- Assigns RBAC for VM login, AVD, and application group access.
-- Grants/reviews admin consent for storage enterprise app and adjusts Conditional Access.
-- Enables VM auto-shutdown for cost savings.
+- **03-AVD-Ent-Config.ps1:**
+  - Interactive PowerShell script for configuring AAD groups (user, admin, device), assigning permissions, and updating Conditional Access policies.
+  - Ensures correct group memberships, role assignments, and auto-shutdown schedules.
+  - Assists with CA exclusion for the storage app and prompts for required admin consent.
 
-### 4. `04-Add-StorageDNSRecord.ps1`
-- Run on your DNS management server.
-- Adds an A record for the storage account’s private endpoint in your internal DNS zone.
+- **04-Add-StorageDNSRecord.ps1.ps1:**
+  - Adds a DNS A record for your storage account’s private endpoint in the correct DNS zone.
+  - Ensures the zone and record exist, creating as necessary.
+  - Intended for Windows DNS servers with the DNSServer module.
 
-### 5. `05-MountAndSetSharePermissions.ps1`
-- Run on a hybrid-joined Windows device with appropriate network and AD access.
-- Mounts FSLogix profile and redirection shares.
-- Applies strict NTFS permissions for AVD user and admin groups.
+- **05-MountAndSetSharePermissions.ps1:**
+  - Maps `profiles` and `redirections` shares by UNC path, sets NTFS permissions for AVD user/admin groups.
+  - Designed for hybrid-joined Windows clients.
+  - Verifies share mapping and permission application, cleans up after execution.
 
 ---
 
 ## ⚠️ Prerequisites
 
-- Azure subscription and permissions to deploy resources.
-- Azure CLI, PowerShell, and (optionally) Azure Portal access.
-- Admin rights on AD/DNS servers for steps 4 and 5.
-- [FSLogix](https://docs.microsoft.com/en-us/fslogix/) licensing.
-- Hybrid identity (Azure AD + Active Directory) for full enterprise integration.
+- Azure subscription with resource deployment permissions
+- Azure CLI, PowerShell, and/or Portal access
+- Admin permissions on AD/DNS servers (for steps 4 & 5)
+- [FSLogix licensing](https://docs.microsoft.com/en-us/fslogix/)
+- Hybrid identity setup (Azure AD + Active Directory)
+- PowerShell modules: `Az`, `Microsoft.Graph`, `DNSServer` as required
 
 ---
 
-## 🔒 Security & Best Practices
+## 🔐 Security & Best Practices
 
-- Storage and AVD resources are deployed with private endpoints and strict network ACLs.
-- All permissions are group-based for least privilege.
-- Manual steps (e.g., DNS, app consent) are clearly indicated in script output.
-- Scripts are designed to be idempotent and safely re-runnable.
+- All storage and AVD resources use private endpoints and strict network ACLs
+- Permissions are group-based for least-privilege access
+- Manual steps (DNS, consent, CA) are clearly indicated in output/scripts
+- Scripts and templates are idempotent and safely re-runnable
 
 ---
 
-## 📝 Credits & Maintenance
+## 🤝 Contributions & Support
 
 Maintained by [andrew-kemp](https://github.com/andrew-kemp).
 
-Feel free to open [issues](https://github.com/YOUR-ORG/YOUR-REPO/issues) or pull requests for improvements or bug fixes.
+Contributions and feedback are welcome!  
+Please open [issues](https://github.com/andrew-kemp/AzureVirtualDesktop/issues) or submit pull requests for improvements and fixes.
 
 ---
 
