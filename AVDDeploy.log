@@ -1,0 +1,66 @@
+2025-06-12 19:11:37 [WARN] Installing module Az.Accounts...
+2025-06-12 19:11:45 [ERROR] Installed Az.Accounts. Please restart PowerShell session.
+2025-06-12 19:19:44 [INFO] Already logged in to Azure CLI as andrew@kemponline.co.uk
+2025-06-12 19:19:44 [INFO] Already connected to Az PowerShell as andrew@kemponline.co.uk
+2025-06-12 19:48:55 [INFO] Already logged in to Azure CLI as andrew@kemponline.co.uk
+2025-06-12 19:48:55 [INFO] Already connected to Az PowerShell as andrew@kemponline.co.uk
+2025-06-12 19:48:56 [WARN] Connecting to Microsoft Graph...
+2025-06-12 19:48:57 [INFO] Connected to Microsoft Graph as andrew@kemponline.co.uk
+2025-06-12 19:48:57 [INFO] Environment preparation complete.
+2025-06-12 19:48:58 [INFO] Fetching Azure subscriptions...
+2025-06-12 19:49:04 [INFO] Using subscription: Microsoft Azure Sponsorship (9ccc53d0-c424-42d0-8fd6-b48edcea12dd)
+2025-06-12 19:49:09 [INFO] Subscription selection complete.
+2025-06-12 19:49:24 [INFO] Resource group setup complete.
+2025-06-12 19:49:33 [INFO] Already logged in to Azure CLI as andrew@kemponline.co.uk
+2025-06-12 19:49:33 [INFO] Already connected to Az PowerShell as andrew@kemponline.co.uk
+2025-06-12 19:49:33 [INFO] Already connected to Microsoft Graph as andrew@kemponline.co.uk
+2025-06-12 19:49:33 [INFO] Environment preparation complete.
+2025-06-12 19:49:34 [INFO] Fetching Azure subscriptions...
+2025-06-12 19:56:27 [INFO] Already logged in to Azure CLI as andrew@kemponline.co.uk
+2025-06-12 19:56:28 [INFO] Already connected to Az PowerShell as andrew@kemponline.co.uk
+2025-06-12 19:56:28 [INFO] Already connected to Microsoft Graph as andrew@kemponline.co.uk
+2025-06-12 19:56:28 [INFO] Environment preparation complete.
+2025-06-12 19:56:29 [INFO] Fetching Azure subscriptions...
+2025-06-12 19:56:35 [INFO] Using subscription: Microsoft Azure Sponsorship (9ccc53d0-c424-42d0-8fd6-b48edcea12dd)
+2025-06-12 19:56:39 [INFO] Subscription selection complete.
+2025-06-12 19:57:16 [INFO] Resource group setup complete.
+2025-06-12 20:01:35 [INFO] Already logged in to Azure CLI as andrew@kemponline.co.uk
+2025-06-12 20:01:35 [INFO] Already connected to Az PowerShell as andrew@kemponline.co.uk
+2025-06-12 20:01:35 [INFO] Already connected to Microsoft Graph as andrew@kemponline.co.uk
+2025-06-12 20:01:35 [INFO] Environment preparation complete.
+2025-06-12 20:01:36 [INFO] Fetching Azure subscriptions...
+2025-06-12 20:01:40 [INFO] Using subscription: Microsoft Azure Sponsorship (9ccc53d0-c424-42d0-8fd6-b48edcea12dd)
+2025-06-12 20:01:43 [INFO] Subscription selection complete.
+2025-06-12 20:01:52 [INFO] Resource group setup complete.
+2025-06-12 20:02:26 [INFO] Entra group setup complete.
+2025-06-12 20:03:29 [INFO] All parameters collected for deployment.
+2025-06-12 20:03:30 [INFO] Deployment parameter input complete.
+2025-06-12 20:11:59 [INFO] Already logged in to Azure CLI as andrew@kemponline.co.uk
+2025-06-12 20:11:59 [INFO] Already connected to Az PowerShell as andrew@kemponline.co.uk
+2025-06-12 20:11:59 [INFO] Already connected to Microsoft Graph as andrew@kemponline.co.uk
+2025-06-12 20:11:59 [INFO] Environment preparation complete.
+2025-06-12 20:12:00 [INFO] Fetching Azure subscriptions...
+2025-06-12 20:12:04 [INFO] Using subscription: Microsoft Azure Sponsorship (9ccc53d0-c424-42d0-8fd6-b48edcea12dd)
+2025-06-12 20:12:08 [INFO] Subscription selection complete.
+2025-06-12 20:12:18 [INFO] Resource group setup complete.
+2025-06-12 20:12:34 [INFO] Entra group setup complete.
+2025-06-12 20:12:36 [INFO] Assigning 'Virtual Machine User Login' to object df4e5b87-e058-4077-b308-b7aac66b346f at scope /subscriptions/9ccc53d0-c424-42d0-8fd6-b48edcea12dd/resourceGroups/Kemponline-AVD...
+2025-06-12 20:12:36 [INFO] Assigning 'Virtual Machine User Login' to object a135c11b-f611-40f8-afda-b89e49e4b88c at scope /subscriptions/9ccc53d0-c424-42d0-8fd6-b48edcea12dd/resourceGroups/Kemponline-AVD...
+2025-06-12 20:12:36 [INFO] Assigning 'Virtual Machine Administrator Login' to object a135c11b-f611-40f8-afda-b89e49e4b88c at scope /subscriptions/9ccc53d0-c424-42d0-8fd6-b48edcea12dd/resourceGroups/Kemponline-AVD...
+2025-06-12 20:12:40 [ERROR] Application Group '-AppGroup' does not exist in resource group 'Kemponline-AVD'.
+2025-06-12 20:41:41 [INFO] Set Azure context to subscription 9ccc53d0-c424-42d0-8fd6-b48edcea12dd
+2025-06-12 20:44:55 [INFO] Set Azure context to subscription 9ccc53d0-c424-42d0-8fd6-b48edcea12dd
+2025-06-12 20:45:10 [INFO] Using resource group: Kemponline-AVD (uksouth)
+2025-06-12 20:45:10 [INFO] Resource group setup complete.
+2025-06-12 20:49:36 [INFO] Set Azure context to subscription 9ccc53d0-c424-42d0-8fd6-b48edcea12dd
+2025-06-12 20:49:46 [INFO] Using resource group: Kemponline-AVD (uksouth)
+2025-06-12 20:49:46 [INFO] Resource group setup complete.
+2025-06-12 20:50:00 [INFO] Searching for Azure AD groups containing '_user-AVD' for Users (Contributors)...
+2025-06-12 20:50:03 [INFO] Selected AAD group for: _User-AVDUsers ObjectId: df4e5b87-e058-4077-b308-b7aac66b346f
+2025-06-12 20:50:03 [INFO] Searching for Azure AD groups containing '_user-AVD' for Admins (Elevated Contributors)...
+2025-06-12 20:50:04 [INFO] Selected AAD group for: _User-AVDAdmins ObjectId: a135c11b-f611-40f8-afda-b89e49e4b88c
+2025-06-12 20:50:04 [INFO] Entra group setup complete.
+2025-06-12 20:50:15 [INFO] Checking storage account name availability: kempyfls
+2025-06-12 20:50:17 [INFO] Storage account name 'kempyfls' is available.
+2025-06-12 20:50:35 [INFO] Starting Bicep deployment for core infra...
+2025-06-12 20:50:39 [ERROR] Core infrastructure deployment failed.

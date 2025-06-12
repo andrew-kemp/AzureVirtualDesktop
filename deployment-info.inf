@@ -1,0 +1,16 @@
+{
+  "VNetName": "Master-vNet",
+  "ResourceGroupLocation": "uksouth",
+  "ResourceGroup": "Kemponline-AVD",
+  "KerberosDomainName": "kemponline.co.uk",
+  "SubscriptionId": "9ccc53d0-c424-42d0-8fd6-b48edcea12dd",
+  "KerberosDomainGuid": "4dcd55ce-5e53-4a52-871e-2f68fcd90c4f",
+  "StorageAccountName": "kempystorage",
+  "DefaultPrefix": "Kemponline",
+  "AVDUsersGroupOid": "df4e5b87-e058-4077-b308-b7aac66b346f",
+  "CoreInfraPrivateEndpointSubnet": "Storage",
+  "TimestampUTC": "2025-06-12 22:41:03",
+  "AVDAdminsGroupOid": "a135c11b-f611-40f8-afda-b89e49e4b88c",
+  "VNetResourceGroup": "Core-Services",
+  "CoreInfraBicep": "01-Deploy-CoreAVDInfra.bicep"
+}

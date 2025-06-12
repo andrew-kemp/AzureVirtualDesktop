@@ -4,13 +4,13 @@
 // It also configures role assignments for file share contributors and elevated contributors.
 // The template is designed to be reusable and parameterized for flexibility.
 // Version: 1.0.0
-// Created by:Andrew Kemp
+// Created by: Andrew Kemp
 // Date: 2025-06-08
 // Created with the assistance of Copilot for GitHub
-//Run this script in the Azure Cloud Shell or Azure CLI with Bicep installed
+// Run this script in the Azure Cloud Shell or Azure CLI with Bicep installed
 // Script 1 of 5
 
-// This will as you for the followin:
+// This will ask you for the following:
 // Create or use an existing resource group
 // Provide a name for the storage account (must be globally unique)
 // Provide the Active Directory domain name for Azure AD Kerberos authentication
@@ -21,7 +21,6 @@
 // Provide the name of the vNet for the Private Endpoint (default is 'Master-vNet')
 // Provide the subnet name for the Private Endpoint (default is 'Storage')
 // Provide a prefix for the AVD resources (default is 'Kemponline')
-
 
 //// Parameters:
 
@@ -35,10 +34,10 @@ param kerberosDomainName string
 param kerberosDomainGuid string
 
 @description('The Object ID of the group to assign Storage File Data SMB Share Contributor.')
-param smbShareContributorGroupOid string
+param avdUsersGroupOid string
 
 @description('The Object ID of the group to assign Storage File Data SMB Share Elevated Contributor.')
-param smbShareElevatedContributorGroupOid string
+param avdAdminsGroupOid string
 
 @description('Resource group of the vNet for the Private Endpoint')
 param vnetResourceGroup string = 'Core-Services'
@@ -50,7 +49,7 @@ param vnetName string = 'Master-vNet'
 param subnetName string = 'Storage'
 
 @description('Prefix for the AVD resources')
-param DefaultPrefix string = 'Kemponline'
+param defaultPrefix string = 'Kemponline'
 
 // STORAGE RESOURCES
 
@@ -71,7 +70,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
         domainName: kerberosDomainName
         domainGuid: kerberosDomainGuid
       }
-      sharePermissions: 'Share'
+      // sharePermissions is not a valid property under azureFilesIdentityBasedAuthentication as of latest API
     }
     networkAcls: {
       defaultAction: 'Deny'
@@ -103,23 +102,23 @@ resource fileShareRedirection 'Microsoft.Storage/storageAccounts/fileServices/sh
 }
 
 // Role assignment for Storage File Data SMB Share Contributor
-resource smbShareContributorAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(storageAccount.id, smbShareContributorGroupOid, 'FileShareContributor')
+resource avdUsersAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(storageAccount.id, avdUsersGroupOid, 'FileShareContributor')
   scope: storageAccount
   properties: {
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '0c867c2a-1d8c-454a-a3db-ab2ea1bdc8bb')
-    principalId: smbShareContributorGroupOid
+    principalId: avdUsersGroupOid
     principalType: 'Group'
   }
 }
 
 // Role assignment for Storage File Data SMB Share Elevated Contributor
-resource smbShareElevatedContributorAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(storageAccount.id, smbShareElevatedContributorGroupOid, 'FileShareElevatedContributor')
+resource avdAdminsAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(storageAccount.id, avdAdminsGroupOid, 'FileShareElevatedContributor')
   scope: storageAccount
   properties: {
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'a7264617-510b-434b-a828-9731dc254ea7')
-    principalId: smbShareElevatedContributorGroupOid
+    principalId: avdAdminsGroupOid
     principalType: 'Group'
   }
 }
@@ -159,13 +158,13 @@ resource privateEndpoint 'Microsoft.Network/privateEndpoints@2023-05-01' = {
 
 // AVD RESOURCES
 
-// Hostpool
-resource HostPool 'Microsoft.DesktopVirtualization/hostPools@2021-07-12' = {
-  name: '${DefaultPrefix}-HostPool'
+// Host Pool
+resource hostPool 'Microsoft.DesktopVirtualization/hostPools@2021-07-12' = {
+  name: '${defaultPrefix}-HostPool'
   location: resourceGroup().location
   properties: {
-    friendlyName: '${DefaultPrefix} Host Pool'
-    description: '${DefaultPrefix} AVD Host Pool for users to securely access resources from'
+    friendlyName: '${defaultPrefix} Host Pool'
+    description: '${defaultPrefix} AVD Host Pool for users to securely access resources from'
     hostPoolType: 'Pooled'
     loadBalancerType: 'BreadthFirst'
     maxSessionLimit: 5
@@ -177,26 +176,26 @@ resource HostPool 'Microsoft.DesktopVirtualization/hostPools@2021-07-12' = {
 }
 
 // Desktop Application Group
-resource AppGroup 'Microsoft.DesktopVirtualization/applicationGroups@2021-07-12' = {
-  name: '${DefaultPrefix}-AppGroup'
+resource appGroup 'Microsoft.DesktopVirtualization/applicationGroups@2021-07-12' = {
+  name: '${defaultPrefix}-AppGroup'
   location: resourceGroup().location
   properties: {
-    description: '${DefaultPrefix} Application Group'
-    friendlyName: '${DefaultPrefix} Desktop Application Group'
-    hostPoolArmPath: HostPool.id
+    description: '${defaultPrefix} Application Group'
+    friendlyName: '${defaultPrefix} Desktop Application Group'
+    hostPoolArmPath: hostPool.id
     applicationGroupType: 'Desktop'
   }
 }
 
 // AVD Workspace 
-resource Workspace 'Microsoft.DesktopVirtualization/workspaces@2021-07-12' = {
-  name: '${DefaultPrefix}-Workspace'
+resource workspace 'Microsoft.DesktopVirtualization/workspaces@2021-07-12' = {
+  name: '${defaultPrefix}-Workspace'
   location: resourceGroup().location
   properties: {
-    description: '${DefaultPrefix} Workspace'
-    friendlyName: '${DefaultPrefix} Workspace'
+    description: '${defaultPrefix} Workspace'
+    friendlyName: '${defaultPrefix} Workspace'
     applicationGroupReferences: [
-      AppGroup.id
+      appGroup.id
     ]
   }
 }
@@ -207,6 +206,6 @@ output storageAccountId string = storageAccount.id
 output profilesShareName string = fileShareProfiles.name
 output redirectionShareName string = fileShareRedirection.name
 output privateEndpointId string = privateEndpoint.id
-output hostPoolId string = HostPool.id
-output appGroupId string = AppGroup.id
-output workspaceId string = Workspace.id
+output hostPoolId string = hostPool.id
+output appGroupId string = appGroup.id
+output workspaceId string = workspace.id

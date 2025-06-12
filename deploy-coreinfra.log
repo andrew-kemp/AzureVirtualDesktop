@@ -1,0 +1,154 @@
+2025-06-12 20:58:58 [INFO] Set Azure context to subscription 9ccc53d0-c424-42d0-8fd6-b48edcea12dd
+2025-06-12 20:59:14 [INFO] Using resource group: Kemponline-AVD (uksouth)
+2025-06-12 20:59:14 [INFO] Resource group setup complete.
+2025-06-12 20:59:24 [INFO] Searching for Azure AD groups containing '_users-AVD' for Users (Contributors)...
+2025-06-12 20:59:25 [WARN] No groups found containing '_users-AVD' in the display name.
+2025-06-12 20:59:30 [INFO] Searching for Azure AD groups containing '_user-AVD' for Users (Contributors)...
+2025-06-12 20:59:33 [INFO] Selected AAD group for: _User-AVDUsers ObjectId: df4e5b87-e058-4077-b308-b7aac66b346f
+2025-06-12 20:59:33 [INFO] Searching for Azure AD groups containing '_user-AVD' for Admins (Elevated Contributors)...
+2025-06-12 20:59:34 [INFO] Selected AAD group for: _User-AVDAdmins ObjectId: a135c11b-f611-40f8-afda-b89e49e4b88c
+2025-06-12 20:59:34 [INFO] Entra group setup complete.
+2025-06-12 21:00:23 [INFO] Checking storage account name availability: kempyfsl
+2025-06-12 21:00:25 [INFO] Storage account name 'kempyfsl' is available.
+2025-06-12 21:01:08 [INFO] Starting Bicep deployment for core infra using 01-Deploy-CoreAVDInfra.bicep...
+2025-06-12 21:02:50 [INFO] Core infrastructure deployment succeeded.
+2025-06-12 21:08:38 [INFO] Set Azure context to subscription 9ccc53d0-c424-42d0-8fd6-b48edcea12dd
+2025-06-12 21:08:50 [INFO] Using resource group: Kemponline-AVD (uksouth)
+2025-06-12 21:08:50 [INFO] Resource group setup complete.
+2025-06-12 21:08:58 [INFO] Searching for Azure AD groups containing '_user-AVD' for Users (Contributors)...
+2025-06-12 21:09:01 [INFO] Selected AAD group for: _User-AVDUsers ObjectId: df4e5b87-e058-4077-b308-b7aac66b346f
+2025-06-12 21:09:01 [INFO] Searching for Azure AD groups containing '_user-AVD' for Admins (Elevated Contributors)...
+2025-06-12 21:09:02 [INFO] Selected AAD group for: _User-AVDAdmins ObjectId: a135c11b-f611-40f8-afda-b89e49e4b88c
+2025-06-12 21:09:02 [INFO] Entra group setup complete.
+2025-06-12 21:09:09 [INFO] Checking storage account name availability: kempyfsl
+2025-06-12 21:09:12 [WARN] Storage account name already in use: kempyfsl
+2025-06-12 21:09:14 [INFO] Trying alternate storage account name: kempyfsl513
+2025-06-12 21:09:16 [INFO] Storage account name 'kempyfsl513' is available.
+2025-06-12 21:24:54 [INFO] Set Azure context to subscription 9ccc53d0-c424-42d0-8fd6-b48edcea12dd
+2025-06-12 21:25:02 [INFO] Using resource group: Kemponline-AVD (uksouth)
+2025-06-12 21:25:02 [INFO] Resource group setup complete.
+2025-06-12 21:25:08 [INFO] Searching for Azure AD groups containing '_user-AVD' for Users (Contributors)...
+2025-06-12 21:25:10 [INFO] Selected AAD group for: _User-AVDUsers ObjectId: df4e5b87-e058-4077-b308-b7aac66b346f
+2025-06-12 21:25:10 [INFO] Searching for Azure AD groups containing '_user-AVD' for Admins (Elevated Contributors)...
+2025-06-12 21:25:11 [INFO] Selected AAD group for: _User-AVDAdmins ObjectId: a135c11b-f611-40f8-afda-b89e49e4b88c
+2025-06-12 21:25:11 [INFO] Entra group setup complete.
+2025-06-12 21:25:20 [INFO] Checking storage account name availability: kempyfslogix
+2025-06-12 21:25:23 [INFO] Storage account name 'kempyfslogix' is available.
+2025-06-12 21:26:29 [INFO] Starting Bicep deployment for core infra using ...
+2025-06-12 21:26:30 [ERROR] Core infrastructure deployment failed.
+2025-06-12 21:28:18 [INFO] Set Azure context to subscription 9ccc53d0-c424-42d0-8fd6-b48edcea12dd
+2025-06-12 21:28:24 [INFO] Using resource group: Kemponline-AVD (uksouth)
+2025-06-12 21:28:24 [INFO] Resource group setup complete.
+2025-06-12 21:28:33 [INFO] Searching for Azure AD groups containing '_user-AVD' for Users (Contributors)...
+2025-06-12 21:28:36 [INFO] Selected AAD group for: _User-AVDUsers ObjectId: df4e5b87-e058-4077-b308-b7aac66b346f
+2025-06-12 21:28:36 [INFO] Searching for Azure AD groups containing '_user-AVD' for Admins (Elevated Contributors)...
+2025-06-12 21:28:37 [INFO] Selected AAD group for: _User-AVDAdmins ObjectId: a135c11b-f611-40f8-afda-b89e49e4b88c
+2025-06-12 21:28:37 [INFO] Entra group setup complete.
+2025-06-12 21:28:42 [INFO] Checking storage account name availability: kempyfsl
+2025-06-12 21:28:45 [INFO] Storage account name 'kempyfsl' is available.
+2025-06-12 21:29:09 [INFO] Starting Bicep deployment for core infra using ...
+2025-06-12 21:35:00 [ERROR] Core infrastructure deployment failed.
+2025-06-12 21:35:15 [INFO] Set Azure context to subscription 9ccc53d0-c424-42d0-8fd6-b48edcea12dd
+2025-06-12 21:35:35 [INFO] Using resource group: Kemponline-AVD (uksouth)
+2025-06-12 21:35:35 [INFO] Resource group setup complete.
+2025-06-12 21:35:44 [INFO] Searching for Azure AD groups containing '_user-AVD' for Users (Contributors)...
+2025-06-12 21:35:45 [INFO] Selected AAD group for: _User-AVDUsers ObjectId: df4e5b87-e058-4077-b308-b7aac66b346f
+2025-06-12 21:35:45 [INFO] Searching for Azure AD groups containing '_user-AVD' for Admins (Elevated Contributors)...
+2025-06-12 21:35:46 [INFO] Selected AAD group for: _User-AVDAdmins ObjectId: a135c11b-f611-40f8-afda-b89e49e4b88c
+2025-06-12 21:35:46 [INFO] Entra group setup complete.
+2025-06-12 21:35:51 [INFO] Checking storage account name availability: kempyfsl
+2025-06-12 21:35:53 [INFO] Storage account name 'kempyfsl' is available.
+2025-06-12 21:36:35 [INFO] Starting Bicep deployment for core infra using 01-Deploy-CoreAVDInfra.bicep...
+2025-06-12 21:37:52 [INFO] Core infrastructure deployment succeeded.
+2025-06-12 21:46:19 [INFO] Set Azure context to subscription 9ccc53d0-c424-42d0-8fd6-b48edcea12dd
+2025-06-12 21:46:35 [INFO] Using resource group: Kemponline-AVD (uksouth)
+2025-06-12 21:46:35 [INFO] Resource group setup complete.
+2025-06-12 21:47:29 [INFO] Searching for Azure AD groups containing '_user-AVD' for Users (Contributors)...
+2025-06-12 21:47:34 [INFO] Selected AAD group for: _User-AVDUsers ObjectId: df4e5b87-e058-4077-b308-b7aac66b346f
+2025-06-12 21:47:34 [INFO] Searching for Azure AD groups containing '_user-AVD' for Admins (Elevated Contributors)...
+2025-06-12 21:47:36 [INFO] Selected AAD group for: _User-AVDAdmins ObjectId: a135c11b-f611-40f8-afda-b89e49e4b88c
+2025-06-12 21:47:36 [INFO] Entra group setup complete.
+2025-06-12 21:47:47 [INFO] Checking storage account name availability: fslogixkemponline
+2025-06-12 21:47:49 [INFO] Storage account name 'fslogixkemponline' is available.
+2025-06-12 21:51:40 [INFO] Starting Bicep deployment for core infra using 01-Deploy-CoreAVDInfra.bicep...
+2025-06-12 21:53:23 [INFO] Core infrastructure deployment succeeded.
+2025-06-12 22:10:43 [INFO] Set Azure context to subscription 9ccc53d0-c424-42d0-8fd6-b48edcea12dd
+2025-06-12 22:10:52 [INFO] Using resource group: Kemponline-AVD (uksouth)
+2025-06-12 22:10:52 [INFO] Resource group setup complete.
+2025-06-12 22:10:59 [INFO] Searching for Azure AD groups containing '_user-avd' for Users (Contributors)...
+2025-06-12 22:11:01 [INFO] Selected AAD group for: _User-AVDUsers ObjectId: df4e5b87-e058-4077-b308-b7aac66b346f
+2025-06-12 22:11:01 [INFO] Searching for Azure AD groups containing '_user-avd' for Admins (Elevated Contributors)...
+2025-06-12 22:11:02 [INFO] Selected AAD group for: _User-AVDAdmins ObjectId: a135c11b-f611-40f8-afda-b89e49e4b88c
+2025-06-12 22:11:02 [INFO] Entra group setup complete.
+2025-06-12 22:11:09 [INFO] Checking storage account name availability: kempyfslogix
+2025-06-12 22:11:14 [INFO] Storage account name 'kempyfslogix' is available.
+2025-06-12 22:12:03 [INFO] Core infrastructure deployment succeeded.
+2025-06-12 22:14:35 [INFO] Set Azure context to subscription 9ccc53d0-c424-42d0-8fd6-b48edcea12dd
+2025-06-12 22:14:49 [INFO] Set Azure context to subscription 9ccc53d0-c424-42d0-8fd6-b48edcea12dd
+2025-06-12 22:14:56 [INFO] Using resource group: Kemponline-AVD (uksouth)
+2025-06-12 22:14:56 [INFO] Resource group setup complete.
+2025-06-12 22:15:04 [INFO] Searching for Azure AD groups containing '_user-AVD' for Users (Contributors)...
+2025-06-12 22:15:06 [INFO] Selected AAD group for: _User-AVDUsers ObjectId: df4e5b87-e058-4077-b308-b7aac66b346f
+2025-06-12 22:15:06 [INFO] Searching for Azure AD groups containing '_user-AVD' for Admins (Elevated Contributors)...
+2025-06-12 22:15:07 [INFO] Selected AAD group for: _User-AVDAdmins ObjectId: a135c11b-f611-40f8-afda-b89e49e4b88c
+2025-06-12 22:15:07 [INFO] Entra group setup complete.
+2025-06-12 22:15:12 [INFO] Checking storage account name availability: kempyfsl
+2025-06-12 22:15:14 [INFO] Storage account name 'kempyfsl' is available.
+2025-06-12 22:15:49 [INFO] Core infrastructure deployment succeeded.
+2025-06-12 22:21:56 [INFO] Set Azure context to subscription 9ccc53d0-c424-42d0-8fd6-b48edcea12dd
+2025-06-12 22:22:15 [INFO] Using resource group: Kemponline-AVD (uksouth)
+2025-06-12 22:22:15 [INFO] Resource group setup complete.
+2025-06-12 22:22:22 [INFO] Searching for Azure AD groups containing '_user-AVD' for Users (Contributors)...
+2025-06-12 22:22:24 [INFO] Selected AAD group for: _User-AVDUsers ObjectId: df4e5b87-e058-4077-b308-b7aac66b346f
+2025-06-12 22:22:24 [INFO] Searching for Azure AD groups containing '_user-AVD' for Admins (Elevated Contributors)...
+2025-06-12 22:22:25 [INFO] Selected AAD group for: _User-AVDAdmins ObjectId: a135c11b-f611-40f8-afda-b89e49e4b88c
+2025-06-12 22:22:25 [INFO] Entra group setup complete.
+2025-06-12 22:22:34 [INFO] Checking storage account name availability: kempystorage
+2025-06-12 22:22:36 [INFO] Storage account name 'kempystorage' is available.
+2025-06-12 22:23:21 [ERROR] Core infrastructure deployment failed.
+2025-06-12 22:24:07 [INFO] Set Azure context to subscription 9ccc53d0-c424-42d0-8fd6-b48edcea12dd
+2025-06-12 22:24:27 [INFO] Using resource group: Kemponline-AVD (uksouth)
+2025-06-12 22:24:27 [INFO] Resource group setup complete.
+2025-06-12 22:25:31 [INFO] Set Azure context to subscription 9ccc53d0-c424-42d0-8fd6-b48edcea12dd
+2025-06-12 22:25:37 [INFO] Using resource group: Kemponline-AVD (uksouth)
+2025-06-12 22:25:37 [INFO] Resource group setup complete.
+2025-06-12 22:25:43 [INFO] Searching for Azure AD groups containing '_user-AVD' for Users (Contributors)...
+2025-06-12 22:25:45 [INFO] Selected AAD group for: _User-AVDUsers ObjectId: df4e5b87-e058-4077-b308-b7aac66b346f
+2025-06-12 22:25:45 [INFO] Searching for Azure AD groups containing '_user-AVD' for Admins (Elevated Contributors)...
+2025-06-12 22:25:46 [INFO] Selected AAD group for: _User-AVDAdmins ObjectId: a135c11b-f611-40f8-afda-b89e49e4b88c
+2025-06-12 22:25:46 [INFO] Entra group setup complete.
+2025-06-12 22:25:53 [INFO] Checking storage account name availability: kempystorage
+2025-06-12 22:25:55 [INFO] Storage account name 'kempystorage' is available.
+2025-06-12 22:26:29 [ERROR] Core infrastructure deployment failed.
+2025-06-12 22:30:31 [INFO] Set Azure context to subscription 9ccc53d0-c424-42d0-8fd6-b48edcea12dd
+2025-06-12 22:30:36 [INFO] Using resource group: Kemponline-AVD (uksouth)
+2025-06-12 22:30:36 [INFO] Resource group setup complete.
+2025-06-12 22:30:50 [INFO] Searching for Azure AD groups containing '_user-AVD' for Users (Contributors)...
+2025-06-12 22:30:53 [INFO] Selected AAD group for: _User-AVDUsers ObjectId: df4e5b87-e058-4077-b308-b7aac66b346f
+2025-06-12 22:30:53 [INFO] Searching for Azure AD groups containing '_user-AVD' for Admins (Elevated Contributors)...
+2025-06-12 22:30:54 [INFO] Selected AAD group for: _User-AVDAdmins ObjectId: a135c11b-f611-40f8-afda-b89e49e4b88c
+2025-06-12 22:30:54 [INFO] Entra group setup complete.
+2025-06-12 22:30:58 [INFO] Checking storage account name availability: kempystorage
+2025-06-12 22:31:01 [INFO] Storage account name 'kempystorage' is available.
+2025-06-12 22:31:30 [ERROR] Core infrastructure deployment failed: 
+2025-06-12 22:38:06 [INFO] Set Azure context to subscription 9ccc53d0-c424-42d0-8fd6-b48edcea12dd
+2025-06-12 22:38:11 [INFO] Using resource group: Kemponline-AVD (uksouth)
+2025-06-12 22:38:11 [INFO] Resource group setup complete.
+2025-06-12 22:38:21 [INFO] Searching for Azure AD groups containing '_user-avd' for Users (Contributors)...
+2025-06-12 22:38:23 [INFO] Selected AAD group for: _User-AVDUsers ObjectId: df4e5b87-e058-4077-b308-b7aac66b346f
+2025-06-12 22:38:23 [INFO] Searching for Azure AD groups containing '_user-avd' for Admins (Elevated Contributors)...
+2025-06-12 22:38:24 [INFO] Selected AAD group for: _User-AVDAdmins ObjectId: a135c11b-f611-40f8-afda-b89e49e4b88c
+2025-06-12 22:38:24 [INFO] Entra group setup complete.
+2025-06-12 22:38:28 [INFO] Checking storage account name availability: kempystor
+2025-06-12 22:38:30 [INFO] Storage account name 'kempystor' is available.
+2025-06-12 22:39:11 [ERROR] Core infrastructure deployment failed: 
+2025-06-12 22:40:17 [INFO] Set Azure context to subscription 9ccc53d0-c424-42d0-8fd6-b48edcea12dd
+2025-06-12 22:40:20 [INFO] Using resource group: Kemponline-AVD (uksouth)
+2025-06-12 22:40:20 [INFO] Resource group setup complete.
+2025-06-12 22:40:27 [INFO] Searching for Azure AD groups containing '_user-AVD' for Users (Contributors)...
+2025-06-12 22:40:28 [INFO] Selected AAD group for: _User-AVDUsers ObjectId: df4e5b87-e058-4077-b308-b7aac66b346f
+2025-06-12 22:40:28 [INFO] Searching for Azure AD groups containing '_user-AVD' for Admins (Elevated Contributors)...
+2025-06-12 22:40:29 [INFO] Selected AAD group for: _User-AVDAdmins ObjectId: a135c11b-f611-40f8-afda-b89e49e4b88c
+2025-06-12 22:40:29 [INFO] Entra group setup complete.
+2025-06-12 22:40:35 [INFO] Checking storage account name availability: kempystorage
+2025-06-12 22:40:37 [INFO] Storage account name 'kempystorage' is available.
