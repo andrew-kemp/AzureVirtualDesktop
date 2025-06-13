@@ -152,3 +152,5 @@
 2025-06-12 22:40:29 [INFO] Entra group setup complete.
 2025-06-12 22:40:35 [INFO] Checking storage account name availability: kempystorage
 2025-06-12 22:40:37 [INFO] Storage account name 'kempystorage' is available.
+2025-06-12 22:42:44 [INFO] Core infrastructure deployment succeeded.
+2025-06-12 22:42:48 [ERROR] Deployment command exception: Cannot bind argument to parameter 'AppGroupName' because it is an empty string.
