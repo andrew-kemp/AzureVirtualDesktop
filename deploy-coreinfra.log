@@ -154,3 +154,26 @@
 2025-06-12 22:40:37 [INFO] Storage account name 'kempystorage' is available.
 2025-06-12 22:42:44 [INFO] Core infrastructure deployment succeeded.
 2025-06-12 22:42:48 [ERROR] Deployment command exception: Cannot bind argument to parameter 'AppGroupName' because it is an empty string.
+2025-06-23 16:49:09 [INFO] Set Azure context to subscription 16342a68-1777-4296-a0fd-c9394ad45490
+2025-06-23 16:50:17 [INFO] Set Azure context to subscription 16342a68-1777-4296-a0fd-c9394ad45490
+2025-06-23 16:50:39 [INFO] Creating resource group AVD-Resgroup in uksouth...
+2025-06-23 16:50:44 [INFO] Resource group AVD-Resgroup created.
+2025-06-23 16:50:44 [INFO] Resource group setup complete.
+2025-06-23 16:50:54 [INFO] Searching for Azure AD groups containing 'AVD' for Users (Contributors)...
+2025-06-23 16:51:13 [INFO] Selected AAD group for: AVDUsers ObjectId: ad8830e4-7432-4615-81a0-980dbad2e316
+2025-06-23 16:51:13 [INFO] Searching for Azure AD groups containing 'AVD' for Admins (Elevated Contributors)...
+2025-06-23 16:51:18 [INFO] Selected AAD group for: AVDAdmins ObjectId: b24e832e-6d24-4340-ad2a-be605ab1964a
+2025-06-23 16:51:18 [INFO] Entra group setup complete.
+2025-06-23 16:51:28 [INFO] Checking storage account name availability: kemponlinefsl
+2025-06-23 16:51:40 [INFO] Storage account name 'kemponlinefsl' is available.
+2025-06-23 17:01:20 [INFO] Set Azure context to subscription 9ccc53d0-c424-42d0-8fd6-b48edcea12dd
+2025-06-23 17:01:42 [INFO] Creating resource group AVD-User in uksouth...
+2025-06-23 17:01:45 [INFO] Resource group AVD-User created.
+2025-06-23 17:01:45 [INFO] Resource group setup complete.
+2025-06-23 17:02:00 [INFO] Created AAD group: _AVD-Users ObjectId: 90636280-c1fa-404e-9750-3404125067b9
+2025-06-23 17:02:06 [INFO] Created AAD group: _AVD-Admins ObjectId: e868d470-b9e5-46dd-bbb6-f1692d120ce9
+2025-06-23 17:02:06 [INFO] Entra group setup complete.
+2025-06-23 17:02:25 [INFO] Checking storage account name availability: kemponlinefsl
+2025-06-23 17:02:27 [INFO] Storage account name 'kemponlinefsl' is available.
+2025-06-23 17:08:06 [INFO] Core infrastructure deployment succeeded.
+2025-06-23 17:09:03 [ERROR] Deployment command exception: Cannot bind argument to parameter 'AppGroupName' because it is an empty string.

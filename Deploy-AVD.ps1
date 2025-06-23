@@ -39,6 +39,7 @@
 
 function Write-Banner {
     param([string]$Text)
+    pause
     Write-Host ""
     Write-Host "########################################" -ForegroundColor Cyan
     Write-Host ("#  {0,-36} #" -f $Text) -ForegroundColor Cyan
